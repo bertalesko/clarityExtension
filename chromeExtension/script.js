@@ -1,6 +1,60 @@
+document.addEventListener('firstClick', function()
+{
+	var button1 = document.getElementById('timesheet-work-add-btn');
+	console.log("ELO");
+	button1.click();
+	
+});
+
+document.addEventListener('secondClick', function()
+{
+	var button2 = document.getElementById('Select Tasks');
+	//console.log(butAdd.textContent);
+	button2.click();
+	
+});
+
+document.addEventListener('thirdClick', function()
+{
+	
+	var button3 = document.getElementsByName('tasks-9458-timesheetTasks-common-search');
+	button3.value = textValue;
+	
+});
+
+
+function BclickFirst()
+				{
+					var button1 = document.getElementById('timesheet-work-add-btn');
+					button1.click();
+					
+				}
+				
+				function clickSecond()
+				{
+					var button2 = document.getElementById('Select Tasks');
+					//console.log(butAdd.textContent);
+					button2.click();
+					
+				}
+				
+				function setThird(textValue)
+				{
+					var button3 = document.getElementsByName('tasks-9458-timesheetTasks-common-search');
+					button3.value = textValue;
+					
+				}
+
+
+
+
 window.addEventListener("DOMContentLoaded", (event) => {
 	const el = document.getElementById('fixit');
-	if (el) {
+	var jobList = new Array();
+	
+	
+	if (el) 
+	{
 		//document.addEventListener('load', () => {
 		el.addEventListener('click', ()  => {
 			chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -116,5 +170,78 @@ window.addEventListener("DOMContentLoaded", (event) => {
 				});
 			});
 		});
+	
+	
 	}
+	
+	
+	
+	const el2 = document.getElementById('saveList');
+	if (el2) {
+			el2.addEventListener('click', ()  => {
+			chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+				const tab = tabs[0];
+				
+				function SaveJobList()
+				{
+					jobList = [];
+					var elements = document.getElementsByClassName('timeentry-item-name'), elLength = elements.length;
+					
+					for (var i1 = 0 ; i1 < elLength; i1++)
+					{
+						jobList.push(elements.item(i1).textContent);
+						//console.log(elements.item(i1).textContent);						
+					}					
+				}
+			  
+
+				chrome.scripting.executeScript({
+					target: { tabId: tab.id },
+					func: SaveJobList
+					
+				});
+			});
+		});
+	
+	
+	}
+	
+	
+	
+	const el3 = document.getElementById('populateList');
+	if (el3) {
+			el3.addEventListener('click', ()  => {
+			chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+				const tab = tabs[0];
+				
+				
+				function populate()
+				{
+					var evt1 = document.createEvent('Event');
+					evt1.initEvent('firstClick', true, false);
+				
+				
+				
+					document.dispatchEvent(evt1);
+					//clickSecond();
+					//setThird();
+				
+					
+										
+				}
+			  
+
+				chrome.scripting.executeScript({
+					target: { tabId: tab.id },
+					func: populate
+					
+				});
+			});
+		});
+	
+	
+	}
+	
+	
+	
 });
