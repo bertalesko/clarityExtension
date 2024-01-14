@@ -204,48 +204,42 @@ window.addEventListener("DOMContentLoaded", (event) => {
 	
 	
 	const el3 = document.getElementById('populateList');
-	if (el3) {
-			el3.addEventListener('click', ()  => {
-			chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-				const tab = tabs[0];
-				
-				function BclickFirst()
-				{
-					var button1 = document.getElementById('timesheet-work-add-btn');
-					button1.click();
-					
-				}
-			  
-				
-				function populate()
-				{
-					var evt1 = document.createEvent('Event');
-					evt1.initEvent('firstClick', true, false);
-				
-				
-				
-					document.dispatchEvent(evt1);
-					BclickFirst();
-					
-					//clickSecond();
-					//setThird();
-				
-					
-										
-				}
-				
-				
+if (el3) {
+    el3.addEventListener('click', () => {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            const tab = tabs[0];
 
-				chrome.scripting.executeScript({
-					target: { tabId: tab.id },
-					func: populate
-					
-				});
-			});
-		});
+            function populate() {
+                function BclickFirst() {
+                    try {
+                        var button1 = document.getElementById('timesheet-work-add-btn');
+                        if (button1) {
+                            button1.click();
+                        } else {
+                            console.error('Button with ID timesheet-work-add-btn not found.');
+                        }
+                    } catch (error) {
+                        console.error('Error in BclickFirst:', error);
+                    }
+                }
+
+                BclickFirst();
+
+                var evt1 = document.createEvent('Event');
+                evt1.initEvent('firstClick', true, false);
+                document.dispatchEvent(evt1);
+            }
+
+            chrome.scripting.executeScript({
+                target: { tabId: tab.id },
+                function: populate
+            });
+        });
+    });
+}
 	
 	
-	}
+
 	
 	
 	
