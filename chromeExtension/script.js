@@ -23,27 +23,22 @@ document.addEventListener('thirdClick', function()
 });
 
 
-function BclickFirst()
-{
-	var button1 = document.getElementById('timesheet-work-add-btn');
-	button1.click();
-	
-}
 
-function clickSecond()
-{
-	var button2 = document.getElementById('Select Tasks');
-	//console.log(butAdd.textContent);
-	button2.click();
-	
-}
-
-function setThird(textValue)
-{
-	var button3 = document.getElementsByName('tasks-9458-timesheetTasks-common-search');
-	button3.value = textValue;
-	
-}
+				
+				function clickSecond()
+				{
+					var button2 = document.getElementById('Select Tasks');
+					//console.log(butAdd.textContent);
+					button2.click();
+					
+				}
+				
+				function setThird(textValue)
+				{
+					var button3 = document.getElementsByName('tasks-9458-timesheetTasks-common-search');
+					button3.value = textValue;
+					
+				}
 
 
 
@@ -214,6 +209,13 @@ window.addEventListener("DOMContentLoaded", (event) => {
 			chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 				const tab = tabs[0];
 				
+				function BclickFirst()
+				{
+					var button1 = document.getElementById('timesheet-work-add-btn');
+					button1.click();
+					
+				}
+			  
 				
 				function populate()
 				{
@@ -223,14 +225,16 @@ window.addEventListener("DOMContentLoaded", (event) => {
 				
 				
 					document.dispatchEvent(evt1);
-					//BclickFirst();   //-- complains it's undefined
-					//clickSecond();   //-- complains it's undefined
-					//setThird();   //-- complains it's undefined
+					BclickFirst();
+					
+					//clickSecond();
+					//setThird();
 				
 					
 										
 				}
-			  
+				
+				
 
 				chrome.scripting.executeScript({
 					target: { tabId: tab.id },
