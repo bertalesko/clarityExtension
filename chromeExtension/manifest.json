@@ -12,6 +12,7 @@
   	{
 		"matches": ["http://clarity.amgreetings.com/*", "https://clarity.amgreetings.com/*"],
 		"js": ["script.js"]
+        
 	}
 	],
   "action": {

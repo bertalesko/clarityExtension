@@ -73,7 +73,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 					}
 								
 					
-					//row lopp
+					//row loop
 					for (let i = 2; i <= rownbr; i++) {
 						//column loop
 						for (let j = 1; j < 13; j++) {
@@ -158,13 +158,66 @@ window.addEventListener("DOMContentLoaded", (event) => {
 	
 	
 	
+	const el62 = document.getElementById('printa');
+	if (el62) {
+			el62.addEventListener('click', ()  => {
+			chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+				const tab = tabs[0];
+				
+				
+				
+				
+				
+				
+				function printado()
+				{
+					
+					function waitFor(delMs)
+					{ 
+						var TimeStart = Date.now();
+						
+						while ((Date.now() - TimeStart) <= delMs)
+						{
+							continue;
+						}
+						
+						
+					}
+					
+					
+					
+					
+					jobList.forEach(function(entry)
+					{
+						console.log(entry);
+						waitFor(500);
+					});
+					
+					
+				}
+			  
+
+				chrome.scripting.executeScript({
+					target: { tabId: tab.id },
+					func: printado
+					
+				});
+			});
+		});
+	
+	
+	}
+	
+	
+	
+	
 	const el3 = document.getElementById('populateList');
 if (el3) {
     el3.addEventListener('click', () => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const tab = tabs[0];
 
-            function populate() {
+            async function populate() {
                 function clickFirst() 
 				{
                     try 
@@ -196,13 +249,11 @@ if (el3) {
 						var button2 = document.getElementById('Select Tasks');
 						if (button2)
 						{
-							//console.log(butAdd.textContent);
-							button2.click();
-							
+							button2.click();							
 						}
 						else
 						{
-							console.log('Button with ID Select Tasks found.');
+							console.log('Button Select Tasks not found.');
 						}
 						
 					} catch(error)
@@ -211,14 +262,14 @@ if (el3) {
 					}
 				}
 				
-				function selectmafield()
+				async function selectmafield()
 				{
-					
-					
-						var selecField = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[2]/div/ppm-split/div[1]/div/ppm-grid-component/div/div[2]/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div/div[1]/div/div/div/div[2]/input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+					var selecField = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[2]/div/ppm-split/div[1]/div/ppm-grid-component/div/div[2]/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div/div[1]/div/div/div/div[2]/input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+					if (selectField != null)
+					{
 						console.log("clicked", new Date().toLocaleTimeString());
 						selecField.click();
-						
+					}
 					
 					
 				}
@@ -227,23 +278,22 @@ if (el3) {
 				
 				function checkIfExists(textValue)
 				{
-					
 					var isLoaded = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[2]/div/ppm-split/div[1]/div/ppm-grid-component/div/div[2]/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div[1]/div[2]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 					
 					if (isLoaded)
 					{
-						console.log(isLoaded.textContent);
-						console.log("mytext:", isLoaded.textContent);
+						console.log("fieldT:",isLoaded.textContent);
+						console.log("mytext:", textValue);
 						
 						
 						if (isLoaded.textContent.trim() == textValue)
 						{
-							console.log("mytext:", isLoaded.textContent, new Date().toLocaleTimeString());
 							selectmafield();
 							return true;
 						}
 						else
 						{
+							console.log("wrong text value");
 							return false;
 						}
 					}
@@ -252,105 +302,152 @@ if (el3) {
 						console.log("f");
 						return false;
 					}
-				
 				}
 				
 				
-				function waitFor(delMs)
+				async function waitFor(delMs)
 				{ 
 					var TimeStart = Date.now();
-					console.log(TimeStart);
+					
 					while ((Date.now() - TimeStart) <= delMs)
 					{
 						continue;
+					}					
+				}
+				
+				
+				async function setText(textVal)
+				{					
+					try
+					{	//check if text field exists first
+						var searchField = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[1]/div[4]/ppm-common-search/div/div/div/div/input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+						if (searchField != null)
+						{
+						
+							console.log("set text:", textVal);
+							//Update text field
+							searchField.value = textVal;
+							//waift 0.5sec
+							waitFor(500);
+							//create new event
+							var updateEvent = new Event ('change');		
+							//fire up the event
+							searchField.dispatchEvent(updateEvent);	
+							//wait 0.5 after (let the table update
+							waitFor(500);
+							
+						}							
+					
+					}catch(error)
+					{
+						console.log("error in set text:", error);							
+					}				
+				}
+				
+				
+				
+				async function loopJobs()
+				{
+					console.log("start");
+					console.log(jobList.length);
+					
+					try
+					{
+						// don't bother doing all jobs, 
+						//change i < 2 to jobList.length once finished.
+						for (var i = 0; i < 2; i++)	
+						{
+							
+							if (jobList.length == 0)
+							{
+								console.log("job list empty");
+								break;
+							}
+							
+							
+							//set text to joblists text
+							const setThatText = await setText(jobList[i]);
+							//wait 2 sec(again....)
+							const waiter      = await waitFor(2000);
+							//make sure first entry is my job
+							const TextFound   = await checkIfExists(jobList[i]);
+							//if it is - select it.
+							if(TextFound)
+							{
+								selectmafield();
+							}
+							else
+							{
+								console.log("notfound666");
+							}
+							
+						}
 					}
-					console.log(Date.now());
+					catch(error)
+					
+					{
+						console.log('Error in loopJobs:', error);
+					}
+					
+					console.log("end.");					
 					
 				}
 				
 				
-				function setThird(textValue)
-				{	
-					var FieldFound = false; 
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				function selectJob()
+				{ // not needed for now
 					try
 					{
-						var searchField = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[1]/div[4]/ppm-common-search/div/div/div/div/input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-						if (searchField)
-						{//this will be a for each on jobList
-							
-							searchField.value = textValue;
-							var updateEvent = new Event ('change');
-							searchField.dispatchEvent(updateEvent);
-							var lvCount = 0;
-							var czasOd = Date.now();
-							var czasTeraz;
-							
-							
-							waitFor(5000);
-							FieldFound = checkIfExists();	
-							
-							console.log(FieldFound);	
-							
-														
-					
-							console.log("popopo", new Date().toLocaleTimeString());
 						
-							
-							
-							
-							
+						var addButton = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[3]/ppm-button-st[2]/button', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+						if (addButton)
+						{						
+							addButton.click();											
 						}
 						else
 						{
-							console.log('Could not find text field.');
+							console.log('Could not find add button.');
 						}
-						
+					
 					} 
 					catch(error)
 					{
-						console.log('Error in setThird: ', error);
+						console.log('Error in selectJob: ', error);
 					}
-				}
-				
-				function selectJob()
-				{
-				try
-					{
-					//
-					var addButton = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[3]/ppm-button-st[2]/button', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-					if (addButton)
-					{
-						
-							addButton.click();
-						
-						
-					}
-					else
-					{
-						console.log('Could not find add button.');
-					}
-					
-				} catch(error)
-				{
-					console.log('Error in selectJob: ', error);
-				}
 					
 					
 				}
-
-				
-				
-				
 				
 				
 				
 
-                clickFirst();
+                //clickFirst();
 				
-				clickSecond();
+				//clickSecond();
 				
-				setThird("QAD - Other Busines Unit Support");
-
+				
+				//loopJobs();
+				
+				for await(const job of jobList){
+					await setText(job);
+					
+					console.log(job);
+					//const elo = await waitFor(500);
+					
+				}
+				
+				
+				
+				
                 
             }
 
