@@ -194,7 +194,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 	
 	
 	
-	const el3 = document.getElementById('populateList');
+const el3 = document.getElementById('populateList');
 if (el3) {
     el3.addEventListener('click', () => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
