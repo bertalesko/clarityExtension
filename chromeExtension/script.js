@@ -8,9 +8,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 		//document.addEventListener('load', () => {
 		el.addEventListener('click', ()  => {
 			chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-				const tab = tabs[0];
-				
-				
+				const tab = tabs[0];	
 			
 				function getElementByXpath() {
 					
@@ -34,10 +32,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 						{
 							xx.remove();							
 						}
-						
-						
-							
-						
+												
 					}
 					
 					//check how many jobs there are
@@ -151,9 +146,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 					
 				});
 			});
-		});
-	
-	
+		});	
 	}
 	
 	
@@ -163,11 +156,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
 			el62.addEventListener('click', ()  => {
 			chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 				const tab = tabs[0];
-				
-				
-				
-				
-				
 				
 				function printado()
 				{
@@ -180,12 +168,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 						{
 							continue;
 						}
-						
-						
 					}
-					
-					
-					
 					
 					jobList.forEach(function(entry)
 					{
@@ -220,25 +203,23 @@ if (el3) {
             async function populate() {
                 function clickFirst() 
 				{
-                    try 
+		                    try 
 					{
-                        var button1 = document.getElementById('timesheet-work-add-btn');
-                        if (button1) 
+			                        var button1 = document.getElementById('timesheet-work-add-btn');
+			                        if (button1) 
 						{
-                            button1.click();
-                        } 
+		                            		button1.click();
+		                        	} 
 						
 						else 
 						{
-                            console.log('Button with ID timesheet-work-add-btn not found.');
-                        }
-                    }
-					
-					catch (error) 
+			                            console.log('Button with ID timesheet-work-add-btn not found.');
+			                        }
+                    			}catch (error) 
 					{
-                        console.log('Error in clickFirst:', error);
-                    }
-                }
+                        			console.log('Error in clickFirst:', error);
+                    			}
+               			 }
 				
 				
 				
@@ -273,7 +254,6 @@ if (el3) {
 					
 					
 				}
-				
 				
 				
 				function checkIfExists(textValue)
@@ -394,15 +374,6 @@ if (el3) {
 				}
 				
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				function selectJob()
 				{ // not needed for now
 					try
@@ -430,7 +401,7 @@ if (el3) {
 				
 				
 
-                //clickFirst();
+               			 //clickFirst();
 				
 				//clickSecond();
 				
@@ -440,7 +411,7 @@ if (el3) {
 				for await(const job of jobList){
 					await setText(job);
 					
-					console.log(job);
+					
 					//const elo = await waitFor(500);
 					
 				}
