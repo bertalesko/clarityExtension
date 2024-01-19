@@ -9,8 +9,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
 		el.addEventListener('click', ()  => {
 			chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 				const tab = tabs[0];
-				
-				
 			
 				function getElementByXpath() {
 					
@@ -33,11 +31,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 						else
 						{
 							xx.remove();							
-						}
-						
-						
-							
-						
+						}						
 					}
 					
 					//check how many jobs there are
@@ -66,8 +60,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
 							{
 								continue; 
 							}
-													
-							
 						}
 						rownbr = zz;			
 					}
@@ -105,12 +97,10 @@ window.addEventListener("DOMContentLoaded", (event) => {
 								}								
 							}
 			
-							x.remove();
-			  
+							x.remove();			  
 						}
 					}			
-				  
-				}	
+				  }	
 			  
 
 				chrome.scripting.executeScript({
@@ -262,7 +252,7 @@ if (el3) {
 				
 				
 				
-				function confirmWindow()
+				function clickAdd()
 				{
 					try
 					{
@@ -285,9 +275,6 @@ if (el3) {
 					
 					
 				}
-				
-				
-
 				
 				
 				
@@ -365,9 +352,6 @@ if (el3) {
 				
 				var doLoopCount = jobList.length;
 				do {
-					
-					
-					
 					console.log("array index: ",doLoopCount);
 					var resolveResult3 = await mainFunc(jobList.length);
 					console.log(resolveResult3);
@@ -391,31 +375,9 @@ if (el3) {
 				//	var resolveResult3 = await bleble(i);
 				//	console.log(resolveResult3);
 				//}
-				confirmWindow();
-				
-				
-				
-				
-				
-				
-				
-				
+				clickAdd();
 				
 
-                //clickFirst();
-				
-				//clickSecond();
-				
-				
-				//loopJobs();
-				
-				//for await(const job of jobList){
-				//	await setText(job);
-					
-				//	console.log(job);
-					//const elo = await waitFor(500);
-					
-				//}
                 
             }
 
