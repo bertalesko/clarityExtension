@@ -164,11 +164,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
 			chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 				const tab = tabs[0];
 				
-				
-				
-				
-				
-				
 				function printado()
 				{
 					
@@ -179,21 +174,14 @@ window.addEventListener("DOMContentLoaded", (event) => {
 						while ((Date.now() - TimeStart) <= delMs)
 						{
 							continue;
-						}
-						
-						
+						}	
 					}
-					
-					
-					
 					
 					jobList.forEach(function(entry)
 					{
 						console.log(entry);
 						waitFor(500);
 					});
-					
-					
 				}
 			  
 
@@ -275,7 +263,7 @@ if (el3) {
 				
 				
 				function confirmWindow()
-				{ // not needed for now
+				{
 					try
 					{
 						
@@ -304,7 +292,7 @@ if (el3) {
 				
 				
 
-				function bleble(elemNum)
+				function mainFunc(elemNum)
 				{
 					
 					if (jobList.length == 0)
@@ -381,7 +369,7 @@ if (el3) {
 					
 					
 					console.log("array index: ",doLoopCount);
-					var resolveResult3 = await bleble(jobList.length);
+					var resolveResult3 = await mainFunc(jobList.length);
 					console.log(resolveResult3);
 					jobList[jobList.length].pop();
 					
