@@ -190,157 +190,151 @@ window.addEventListener("DOMContentLoaded", (event) => {
 	
 	
 	const el3 = document.getElementById('populateList');
-if (el3) {
-    el3.addEventListener('click', () => {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            const tab = tabs[0];
-
-            async function populate() {
-                function clickFirst() 
+	if (el3) {
+	    el3.addEventListener('click', () => {
+	        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+	            const tab = tabs[0];
+	
+	            async function populate() {
+	                function clickFirst() 
 				{
-					return new Promise((resolve,reject) =>
-					{
-						try 
+						return new Promise((resolve,reject) =>
 						{
-							var button1 = document.getElementById('timesheet-work-add-btn');
-							if (button1) 
+							try 
 							{
-								button1.click();
-								resolve("clicked");		
-							} 
+								var button1 = document.getElementById('timesheet-work-add-btn');
+								if (button1) 
+								{
+									button1.click();
+									resolve("clicked");		
+								} 
+								
+								else 
+								{
+									console.log('Button with ID timesheet-work-add-btn not found.');
+									reject('Button with ID timesheet-work-add-btn not found.');		
+								}
+							}
 							
-							else 
+							catch (error) 
 							{
-								console.log('Button with ID timesheet-work-add-btn not found.');
+								console.log('Error in clickFirst:', error);
 								reject('Button with ID timesheet-work-add-btn not found.');		
 							}
-						}
-						
-						catch (error) 
-						{
-							console.log('Error in clickFirst:', error);
-							reject('Button with ID timesheet-work-add-btn not found.');		
-						}
-					});
-                }
+						});
+	                 }
 				
 				
 				
-				function clickSecond()
+			function clickSecond()
+			{
+				
+				return new Promise((resolve,reject) =>
+				{
+					setTimeout(function() 
+						{								
+							var button2 = document.getElementById('Select Tasks');
+							if (button2)
+							{
+								button2.click();	
+								resolve("clicked");								
+							}
+							else
+							{
+								console.log('Button Select Tasks not found.');
+								reject("button not found");								
+							}
+						}, 2000);
+					
+				});
+			}
+			
+				
+				
+				
+			function clickAdd()
+			{
+				try
 				{
 					
-					return new Promise((resolve,reject) =>
-					{
-						setTimeout(function() 
-							{								
-								var button2 = document.getElementById('Select Tasks');
-								if (button2)
-								{
-									button2.click();	
-									resolve("clicked");								
-								}
-								else
-								{
-									console.log('Button Select Tasks not found.');
-									reject("button not found");								
-								}
-							}, 2000);
-						
-					});
-				}
-				
-				
-				
-				
-				function clickAdd()
-				{
-					try
-					{
-						
-						var addButton = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[3]/ppm-button-st[2]/button', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-						if (addButton)
-						{						
-							addButton.click();											
-						}
-						else
-						{
-							console.log('Could not find add button.');
-						}
-					
-					} 
-					catch(error)
-					{
-						console.log('Error in selectJob: ', error);
+					var addButton = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[3]/ppm-button-st[2]/button', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+					if (addButton)
+					{						
+						addButton.click();											
 					}
-					
-					
-				}
+					else
+					{
+						console.log('Could not find add button.');
+					}
 				
+				} 
+				catch(error)
+				{
+					console.log('Error in selectJob: ', error);
+				}			
+				
+			}
+			
 				
 				
 
-				function mainFunc(elemNum)
-				{
-					
-					if (jobList.length == 0)
-					{ 
-						console.log("joblist empty!");
-						
-					}
-					
-					if (jobList[elemNum] == null)
-					{
-						return;
-					}
+			function mainFunc(elemNum)
+			{
 				
-					return new Promise ((resolve) =>
-					{ 
-						setTimeout(function() 
-						{
-							console.log("1.62");
-							var searchField = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[1]/div[4]/ppm-common-search/div/div/div/div/input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-							console.log("1.6");
-							if (searchField != null)
-							{
-								console.log("set text:", jobList[elemNum]);
-								//Update text field
-								searchField.value = jobList[elemNum];
-								
-								
-								//create new event
-								var updateEvent = new Event ('change');		
-								searchField.dispatchEvent(updateEvent); 
-								
-								setTimeout(function() 
-								{								
-									var isLoaded = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[2]/div/ppm-split/div[1]/div/ppm-grid-component/div/div[2]/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div[1]/div[2]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-									if (isLoaded)
-									{
-											
-										if (isLoaded.textContent.trim() == jobList[elemNum])
-										{
-											console.log("first row text: ", isLoaded.textContent);
-											
-											var selectField = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[2]/div/ppm-split/div[1]/div/ppm-grid-component/div/div[2]/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div/div[1]/div/div/div/div[2]/input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-											if (selectField != null)
-											{
-												console.log("clicked", new Date().toLocaleTimeString());
-												selectField.click();
-												
-												resolve('resolved');
-											}
-											
-										}
-										else
-										{
-											console.log("wrong text value");										
-										}
-									}
-								}, 2000);
-							}	
-						}, 1500);
-					});					
+				if (jobList.length == 0)
+				{ 
+					console.log("joblist empty!");
+					return;
+					
 				}
+				
+				if (jobList[elemNum] == null)
+				{
+					return;
+				}
+			
+				return new Promise ((resolve) =>
+				{ 
+					setTimeout(function() 
+					{
+						var searchField = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[1]/div[4]/ppm-common-search/div/div/div/div/input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+						if (searchField != null)
+						{
+							console.log("set text:", jobList[elemNum]);
+							//Update text field
+							searchField.value = jobList[elemNum];							
+							
+							//create new event
+							var updateEvent = new Event ('change');		
+							searchField.dispatchEvent(updateEvent); 
+							
+							setTimeout(function() 
+							{								
+								var isLoaded = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[2]/div/ppm-split/div[1]/div/ppm-grid-component/div/div[2]/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div[1]/div[2]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+								if (isLoaded)
+								{										
+									if (isLoaded.textContent.trim() == jobList[elemNum])
+									{
+										console.log("first row text: ", isLoaded.textContent);
+										
+										var selectField = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[2]/div/ppm-split/div[1]/div/ppm-grid-component/div/div[2]/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div/div[1]/div/div/div/div[2]/input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+										if (selectField != null)
+										{
+											console.log("clicked", new Date().toLocaleTimeString());
+											selectField.click();											
+											resolve('resolved');
+										}										
+									}
+									else
+									{
+										console.log("wrong text value");										
+									}
+								}
+							}, 2000);
+						}	
+					}, 1500);
+				});					
+			}
 				
 				
 				
