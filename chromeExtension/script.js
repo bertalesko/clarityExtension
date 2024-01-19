@@ -8,7 +8,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
 		//document.addEventListener('load', () => {
 		el.addEventListener('click', ()  => {
 			chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-				const tab = tabs[0];	
+				const tab = tabs[0];
+				
+				
 			
 				function getElementByXpath() {
 					
@@ -32,7 +34,10 @@ window.addEventListener("DOMContentLoaded", (event) => {
 						{
 							xx.remove();							
 						}
-												
+						
+						
+							
+						
 					}
 					
 					//check how many jobs there are
@@ -146,7 +151,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
 					
 				});
 			});
-		});	
+		});
+	
+	
 	}
 	
 	
@@ -156,6 +163,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
 			el62.addEventListener('click', ()  => {
 			chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 				const tab = tabs[0];
+				
+				
+				
+				
+				
 				
 				function printado()
 				{
@@ -168,7 +180,12 @@ window.addEventListener("DOMContentLoaded", (event) => {
 						{
 							continue;
 						}
+						
+						
 					}
+					
+					
+					
 					
 					jobList.forEach(function(entry)
 					{
@@ -194,7 +211,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 	
 	
 	
-const el3 = document.getElementById('populateList');
+	const el3 = document.getElementById('populateList');
 if (el3) {
     el3.addEventListener('click', () => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -203,178 +220,61 @@ if (el3) {
             async function populate() {
                 function clickFirst() 
 				{
-		                    try 
+					return new Promise((resolve,reject) =>
 					{
-			                        var button1 = document.getElementById('timesheet-work-add-btn');
-			                        if (button1) 
+						try 
 						{
-		                            		button1.click();
-		                        	} 
+							var button1 = document.getElementById('timesheet-work-add-btn');
+							if (button1) 
+							{
+								button1.click();
+								resolve("clicked");		
+							} 
+							
+							else 
+							{
+								console.log('Button with ID timesheet-work-add-btn not found.');
+								reject('Button with ID timesheet-work-add-btn not found.');		
+							}
+						}
 						
-						else 
+						catch (error) 
 						{
-			                            console.log('Button with ID timesheet-work-add-btn not found.');
-			                        }
-                    			}catch (error) 
-					{
-                        			console.log('Error in clickFirst:', error);
-                    			}
-               			 }
+							console.log('Error in clickFirst:', error);
+							reject('Button with ID timesheet-work-add-btn not found.');		
+						}
+					});
+                }
 				
 				
 				
 				function clickSecond()
 				{
-					try
+					
+					return new Promise((resolve,reject) =>
 					{
-						var button2 = document.getElementById('Select Tasks');
-						if (button2)
-						{
-							button2.click();							
-						}
-						else
-						{
-							console.log('Button Select Tasks not found.');
-						}
+						setTimeout(function() 
+							{								
+								var button2 = document.getElementById('Select Tasks');
+								if (button2)
+								{
+									button2.click();	
+									resolve("clicked");								
+								}
+								else
+								{
+									console.log('Button Select Tasks not found.');
+									reject("button not found");								
+								}
+							}, 2000);
 						
-					} catch(error)
-					{
-						console.log('Error in clickSecond: ', error);
-					}
-				}
-				
-				async function selectmafield()
-				{
-					var selecField = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[2]/div/ppm-split/div[1]/div/ppm-grid-component/div/div[2]/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div/div[1]/div/div/div/div[2]/input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-					if (selectField != null)
-					{
-						console.log("clicked", new Date().toLocaleTimeString());
-						selecField.click();
-					}
-					
-					
-				}
-				
-				
-				function checkIfExists(textValue)
-				{
-					var isLoaded = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[2]/div/ppm-split/div[1]/div/ppm-grid-component/div/div[2]/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div[1]/div[2]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-					
-					if (isLoaded)
-					{
-						console.log("fieldT:",isLoaded.textContent);
-						console.log("mytext:", textValue);
-						
-						
-						if (isLoaded.textContent.trim() == textValue)
-						{
-							selectmafield();
-							return true;
-						}
-						else
-						{
-							console.log("wrong text value");
-							return false;
-						}
-					}
-					else
-					{
-						console.log("f");
-						return false;
-					}
-				}
-				
-				
-				async function waitFor(delMs)
-				{ 
-					var TimeStart = Date.now();
-					
-					while ((Date.now() - TimeStart) <= delMs)
-					{
-						continue;
-					}					
-				}
-				
-				
-				async function setText(textVal)
-				{					
-					try
-					{	//check if text field exists first
-						var searchField = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[1]/div[4]/ppm-common-search/div/div/div/div/input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-						if (searchField != null)
-						{
-						
-							console.log("set text:", textVal);
-							//Update text field
-							searchField.value = textVal;
-							//waift 0.5sec
-							waitFor(500);
-							//create new event
-							var updateEvent = new Event ('change');		
-							//fire up the event
-							searchField.dispatchEvent(updateEvent);	
-							//wait 0.5 after (let the table update
-							waitFor(500);
-							
-						}							
-					
-					}catch(error)
-					{
-						console.log("error in set text:", error);							
-					}				
+					});
 				}
 				
 				
 				
-				async function loopJobs()
-				{
-					console.log("start");
-					console.log(jobList.length);
-					
-					try
-					{
-						// don't bother doing all jobs, 
-						//change i < 2 to jobList.length once finished.
-						for (var i = 0; i < 2; i++)	
-						{
-							
-							if (jobList.length == 0)
-							{
-								console.log("job list empty");
-								break;
-							}
-							
-							
-							//set text to joblists text
-							const setThatText = await setText(jobList[i]);
-							//wait 2 sec(again....)
-							const waiter      = await waitFor(2000);
-							//make sure first entry is my job
-							const TextFound   = await checkIfExists(jobList[i]);
-							//if it is - select it.
-							if(TextFound)
-							{
-								selectmafield();
-							}
-							else
-							{
-								console.log("notfound666");
-							}
-							
-						}
-					}
-					catch(error)
-					
-					{
-						console.log('Error in loopJobs:', error);
-					}
-					
-					console.log("end.");					
-					
-				}
 				
-				
-				function selectJob()
+				function confirmWindow()
 				{ // not needed for now
 					try
 					{
@@ -399,26 +299,135 @@ if (el3) {
 				}
 				
 				
+
+				
+				
 				
 
-               			 //clickFirst();
+				function bleble(elemNum)
+				{
+					
+					if (jobList.length == 0)
+					{ 
+						console.log("joblist empty!");
+						
+					}
+					
+					if (jobList[elemNum] == null)
+					{
+						return;
+					}
+				
+					return new Promise ((resolve) =>
+					{ 
+						setTimeout(function() 
+						{
+							console.log("1.62");
+							var searchField = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[1]/div[4]/ppm-common-search/div/div/div/div/input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+							console.log("1.6");
+							if (searchField != null)
+							{
+								console.log("set text:", jobList[elemNum]);
+								//Update text field
+								searchField.value = jobList[elemNum];
+								
+								
+								//create new event
+								var updateEvent = new Event ('change');		
+								searchField.dispatchEvent(updateEvent); 
+								
+								setTimeout(function() 
+								{								
+									var isLoaded = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[2]/div/ppm-split/div[1]/div/ppm-grid-component/div/div[2]/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div[1]/div[2]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+									if (isLoaded)
+									{
+											
+										if (isLoaded.textContent.trim() == jobList[elemNum])
+										{
+											console.log("first row text: ", isLoaded.textContent);
+											
+											var selectField = document.evaluate('/html/body/div[3]/div[2]/div[3]/div/div/div/tabs-scrollable/div/div/div/div/div[1]/div/div/div[2]/div[1]/div/div/div/div[2]/common-view-component/div/div[2]/div/ppm-split/div[1]/div/ppm-grid-component/div/div[2]/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div/div[1]/div/div/div/div[2]/input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+											if (selectField != null)
+											{
+												console.log("clicked", new Date().toLocaleTimeString());
+												selectField.click();
+												
+												resolve('resolved');
+											}
+											
+										}
+										else
+										{
+											console.log("wrong text value");										
+										}
+									}
+								}, 2000);
+							}	
+						}, 1500);
+					});					
+				}
+				
+				
+				
+				
+				//var resolveResult1 = await clickFirst();
+				
+				
+				//var resolveResult2 = await clickSecond();				
+				
+				var doLoopCount = jobList.length;
+				do {
+					
+					
+					
+					console.log("array index: ",doLoopCount);
+					var resolveResult3 = await bleble(jobList.length);
+					console.log(resolveResult3);
+					jobList[jobList.length].pop();
+					
+					
+					console.log("jobs left: ",jobList.length);
+					doLoopCount--;
+					if (doLoopCount == jobList.length)
+					{						
+						doLoopCount = 0;
+					}
+					
+				} while (jobList.length > 0);
+				
+				
+				
+				
+				//for(var i = 0; i < jobList.length ; i++)
+				//{
+				//	var resolveResult3 = await bleble(i);
+				//	console.log(resolveResult3);
+				//}
+				confirmWindow();
+				
+				
+				
+				
+				
+				
+				
+				
+				
+
+                //clickFirst();
 				
 				//clickSecond();
 				
 				
 				//loopJobs();
 				
-				for await(const job of jobList){
-					await setText(job);
+				//for await(const job of jobList){
+				//	await setText(job);
 					
-					
+				//	console.log(job);
 					//const elo = await waitFor(500);
 					
-				}
-				
-				
-				
-				
+				//}
                 
             }
 
