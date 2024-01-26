@@ -1,24 +1,20 @@
 {
   "name": "Clarity Fix",
   "version": "1.0",
-  "manifest_version": 3,
-  "description": "Old clarity was better.",
-  "permissions": [
-    "scripting",
-    "activeTab"
+  "description": "Old Clarity was better",
+  "permissions":   
+  [    
+	"scripting",
+    "activeTab"	 
+  ],    
+  "content_scripts": 
+  [
+	  {
+		  "matches": ["http://clarity.amgreetings.com/*", "https://clarity.amgreetings.com/*"],
+		  "js": ["script.js"]        
+	  }
   ],
-  
-  "content_scripts": [
-  	{
-		"matches": ["http://clarity.amgreetings.com/*", "https://clarity.amgreetings.com/*"],
-		"js": ["script.js"]
-        
-	}
-	],
-  "action": {
-    "default_popup": "index.html"
-  }
+  "manifest_version": 3
 }
-
 
 
