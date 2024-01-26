@@ -1,19 +1,7 @@
 var jobList = new Array();
 
-/*
-if (document.readyState !== "loading" || document.readyState !== "interactive") 
-{ 
-	setInterval(outer2, 2000);	
-} 
-else 
-{
-    setInterval(outer2,2000);	
-}
-*/
 
-setInterval(outer2,2000);	
-
-
+setInterval(outer2,2000);
 
 function outer2()
 {		
